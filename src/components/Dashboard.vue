@@ -86,6 +86,7 @@
 </template>
 
 <script>
+/* eslint-disable vue/multi-word-component-names */
 import { ref, onMounted, computed, watch } from 'vue';
 import * as echarts from 'echarts';
 export default {
@@ -128,16 +129,6 @@ export default {
       todayCalls: 0,
       todayTotalCalls: 0
     });
-
-    // 所有呼叫类型
-    const allCategories = [
-      'Technical Support',
-      'Sales Leads',
-      'Product Information Inquiry',
-      'Product Tracking',
-      'Complain',
-      'N/A'
-    ];
 
     // 初始化柱状图
     const initChart = () => {
@@ -331,14 +322,14 @@ export default {
         const callDateStr = callDate.toISOString().split('T')[0];
 
         // 如果通话日期在选定范围内
-        if (dateMap.hasOwnProperty(callDateStr)) {
+        if (Object.prototype.hasOwnProperty.call(dateMap, callDateStr)) {
           const index = dateMap[callDateStr];
           totalData[index]++;
 
           // 统计分类数据
           const tags = call.tag ? call.tag.split(',').map(tag => tag.trim()) : [];
           tags.forEach(tag => {
-            if (categoryCounts.hasOwnProperty(tag)) {
+            if (Object.prototype.hasOwnProperty.call(categoryCounts, tag)) {
               categoryCounts[tag]++;
             }
           });
@@ -368,11 +359,11 @@ export default {
       });
 
       // 计算统计数据
-      updateSummaryStats(selectedData, totalData, dateLabels, categoryCounts);
+      updateSummaryStats(selectedData, totalData, dateLabels);
     };
 
     // 计算统计数据
-    const updateSummaryStats = (selectedData, totalData, dateLabels, categoryCounts) => {
+    const updateSummaryStats = (selectedData, totalData, dateLabels) => {
       // 计算当前选择类型的统计数据
       const selectedTotal = selectedData.reduce((sum, val) => sum + val, 0);
 

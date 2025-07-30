@@ -85,6 +85,7 @@
 </template>
 
 <script>
+/* eslint-disable vue/multi-word-component-names */
 export default {
   name: 'History',
   props: {
@@ -125,14 +126,16 @@ export default {
           switch (this.timeFilter) {
             case 'today':
               return callDate.toDateString() === now.toDateString();
-            case 'week':
+            case 'week': {
               const oneWeekAgo = new Date(now);
               oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
               return callDate >= oneWeekAgo;
-            case 'month':
+            }
+            case 'month': {
               const oneMonthAgo = new Date(now);
               oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
               return callDate >= oneMonthAgo;
+            }
             default:
               return true;
           }
