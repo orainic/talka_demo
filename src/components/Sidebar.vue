@@ -8,10 +8,13 @@
       <router-link to="/dashboard" class="nav-item" active-class="active" title="Dashboard">
         <i class="fas fa-tachometer-alt icon"></i>
       </router-link>
-      
+
       <router-link to="/history" class="nav-item" active-class="active" title="History">
         <i class="fas fa-history icon"></i>
       </router-link>
+    </div>
+    <div class="theme-toggle" @click="$emit('toggle-dark-mode')">
+      <i :class="darkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
     </div>
   </div>
 </template>
@@ -19,7 +22,13 @@
 <script>
 /* eslint-disable vue/multi-word-component-names */
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  props: {
+    darkMode: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
@@ -97,6 +106,22 @@ export default {
 .icon {
   font-size: 22px; /* 增大图标尺寸 */
   transition: all 0.3s;
+}
+
+.theme-toggle {
+  padding: 15px 0;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.theme-toggle i {
+  color: #bdc3c7;
+  font-size: 20px;
+}
+
+.theme-toggle:hover i {
+  color: white;
 }
 
 /* 移除媒体查询（不再需要响应式调整） */

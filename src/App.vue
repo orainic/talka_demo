@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Sidebar />
+    <Sidebar :dark-mode="darkMode" @toggle-dark-mode="toggleDarkMode" />
     <div class="main-content">
       <div class="content-wrapper">
         <router-view :calls="calls"></router-view>
@@ -22,7 +22,8 @@ export default {
       calls: [],
       socket: null,
       reconnectAttempts: 0,
-      maxReconnectAttempts: 5
+      maxReconnectAttempts: 5,
+      darkMode: false
     }
   },
   methods: {
@@ -84,9 +85,21 @@ export default {
         name: item.ClientName,
       }));
     },
+
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode;
+      if (this.darkMode) {
+        document.body.classList.add('dark');
+      } else {
+        document.body.classList.remove('dark');
+      }
+    }
   },
   mounted() {
     this.initWebSocket();
+    if (this.darkMode) {
+      document.body.classList.add('dark');
+    }
   },
   beforeUnmount() {
     if (this.socket) {
@@ -137,5 +150,46 @@ html, body {
   .content-wrapper {
     padding: 16px;
   }
+}
+
+body.dark {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark #app {
+  background: #121212;
+}
+
+body.dark .content-wrapper {
+  background: #121212;
+}
+
+body.dark .sidebar {
+  background: linear-gradient(to bottom, #1f2d3a, #111a23);
+}
+
+body.dark .call-statistics-container,
+body.dark .history-container,
+body.dark .chat-detail,
+body.dark .box,
+body.dark .summary-box,
+body.dark .summary-card,
+body.dark .chart-section,
+body.dark .pie-chart-container,
+body.dark .stat-item,
+body.dark .search-box,
+body.dark .filter-item select {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark .history-table th,
+body.dark .history-table td {
+  color: #e0e0e0;
+}
+
+body.dark .history-table th {
+  background: #1f2d3a;
 }
 </style>
